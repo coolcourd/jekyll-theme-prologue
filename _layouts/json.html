@@ -1,3 +1,22 @@
+{%- assign _posts = site.posts | sort: 'date' | reverse -%}
+
+[
+{%- for _post in _posts -%}
 {
-    "test": true
+{%- capture _title -%}
+    "title": "{{- _post.title -}}",
+{%- endcapture -%}
+{%- capture _subtitle -%}
+    "author": "{{- _post.author }}"",
+    "date": "{{- _post.date | date_to_long_string -}}"
+{%- endcapture -%}
+{%- capture _excerpt -%}
+    "excerpt": "{{- _post.excerpt | strip_html | truncatewords: 100 -}}"
+{%- endcapture -%}
+{%- capture _link -%}
+    "link": "{{- _post.url | absolute_url -}}"
+{%- endcapture -%}
+{%- assign _content = _excerpt | append: _link -%}
 }
+{%- endfor -%}
+]
